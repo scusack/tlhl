@@ -1,4 +1,4 @@
-# TLHL - _T_he _L_ast _H_TML _L_ibrary you will ever need!
+# TLHL - <em>T</em>he <em>L</em>ast <em>H</em>TML <em>L</em>ibrary you will ever need!
 
 Yeah right.
 
@@ -101,29 +101,21 @@ Here are the conventions:
 
 * Tuples are Elements.
 
-  The first element of a tuple must either be an Element instance or a
-  callable with a renderer_p<strong><sup>ii.</sup></strong> attribute
-  which evaluates to True.
+  The first element of a tuple must either be an Element instance or a callable with a renderer_p<strong><sup>ii.</sup></strong> attribute which evaluates to True.
 
 * Some Dictionaries are Element attributes.<strong><sup>iii.</sup></strong>
 
-  If the second element of a tuple whose first element is an Element
-  instance is a dictionary then it overrides and adds attributes to
-  the element.
+  If the second element of a tuple whose first element is an Element instance is a dictionary then it overrides and adds attributes to the element.
 
 * Callables are called.
 
-  If the first element in a tuple passes the renderer_p test then it
-  is called and passed the remaining elements in the tuple as the
-  first argument and the current printer as the second.
+  If the first element in a tuple passes the renderer_p test then it is called and passed the remaining elements in the tuple as the first argument and the current printer as the second.
 
-  Anything returned by the callable is treated as more content and
-  converted too.
+  Anything returned by the callable is treated as more content and converted too.
 
 * Lists are nested content.
 
-  Lists are a handy way of embedding dynamic content.  Python
-  generators are particularly useful for this.
+  Lists are a handy way of embedding dynamic content.  Python generators are particularly useful for this.
 
 * _None_ and _False_ are ignored.
 
@@ -135,8 +127,7 @@ Here are the conventions:
 
 * Everything else is content.
 
-  Anything not falling into one of the above categories gets unicode()
-  called on it in preparation for output.
+  Anything not falling into one of the above categories gets unicode() called on it in preparation for output.
 
 ## Quick Examples
 
