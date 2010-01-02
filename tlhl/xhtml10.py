@@ -16,7 +16,7 @@ head = make_block('head')
 body = make_block('body')
 
 link   = make_block('link')
-css    = make_block('link',   {"type":"text/css", "rel":"stylesheet"})
+css    = make_block('link',   {"type":"text/css", "rel":"stylesheet", "media":"screen, projection"})
 script = make_block('script', {"type":"text/javascript"}, explicit_end_p=True)
 style  = make_block('style',  {"type":"text/css"}, explicit_end_p=True)
 title  = make_block('title')
@@ -41,6 +41,9 @@ img    = make_inline('img')
 ul   = make_block('ul')
 ol   = make_block('ol')
 li   = make_block('li')
+
+fieldset = make_block('fieldset')
+legend = make_block('legend')
 
 select = make_block('select')
 option = make_block('option')

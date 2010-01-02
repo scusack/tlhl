@@ -6,5 +6,8 @@
 *.swp
 *.pyc
 
+# don't care about the mako stuff this is just for doing the bench marks
+mako
+
 # Can also ignore all directories and files in a directory.
 # tmp/**/* 

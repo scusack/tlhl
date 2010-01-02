@@ -70,7 +70,7 @@ class PrettyPrinter(object):
         self.stream.write(" ")
         self.stream.write(unicode(name))
         self.stream.write('=')
-        self.stream.write(quoteattr(value))
+        self.stream.write(quoteattr(unicode(value)))
 
 def render(exp, printer):
     if exp is None or exp is False: return
@@ -94,7 +94,12 @@ def render(exp, printer):
 
 def render_expression(exp, printer):
     if renderer_p( exp[0] ) :
-        exp[0](exp[1:], printer)
+        # call the renderer giving it the printer so it can do
+        # whatever it want to the stream and also call render on the
+        # result of the call so that it can just give us some 'valid'
+        # TLHL to render.
+        render(exp[0](exp[1:], printer),
+               printer)
         return
 
     elem, attrs, contents = canonicalise_exp(exp)

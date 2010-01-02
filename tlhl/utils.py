@@ -19,7 +19,7 @@ def attrs(identity=None, classes=None, **kwargs):
             result['id'] = components[0][1:]
             class_names.extend(components[1:])
         else :
-            result['id'] = identity
+            class_names.append(identity.strip())
 
     if isinstance(classes, (ListType, TupleType)):
         class_names.extend([c.strip() for c in filter(None, classes)])
