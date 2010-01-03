@@ -1,0 +1,22 @@
+* TODO Ensure all elements are represented.
+
+  Check against: http://xhtml.com/en/xhtml/reference/
+
+* TODO Implement the equivalent Mako bench marks
+
+  Would be interesting to see how performance compares to some other
+  libraries.
+
+* TODO Add some more convenience elements
+
+  Such as;
+
+  - jslink, csslink for emiting links to resources without having to
+    provide a dictionary
+
+  - js, css which automagically wrap the content in CDATA sections,
+    etc
+
+* TODO Add a django contrib
+
+  Elements to emit django forms and fields, etc.
