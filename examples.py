@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import datetime as dt
+import datetime
 
 from tlhl import *
 from tlhl.xhtml10 import *
@@ -19,7 +19,7 @@ def example_1() :
 
     doc = (html,
            (head,
-            (title, "Example generated on: ", dt.date.today()),
+            (title, "Example generated on: ", datetime.date.today()),
             (script, dict(src="example-javascript.js"))),
            (body,
             (select, attrs("#a-select fancy-drop-down"),
@@ -29,9 +29,6 @@ def example_1() :
 def example_2() :
     """
     Things to note:
-
-    * CDATA section demonstrates how to implement emitting directly to
-      the printer.  This is your classic escape hatch.
 
     * Custom attributes that get escaped.
 
@@ -45,20 +42,20 @@ def example_2() :
     """
     doc = (html, {},
            (head, {},
-            (css, attrs(href="/assets/whatever.css")),
-            (style, """
+            (css, "/assets/whatever.css"),
+            (stylesheet, """
 body {
   background-color : white;
 }
 """),
-            (script, (cdata, """
+            (javascript, """
 var afunc = function(param1, param2){
   if (param1 && param2) {
     return 'woohoo the ampersands didn't get escaped!';
   }
   return 'doh!!!'
 };
-"""))),
+""")),
            (body, attrs(classes=["soria", "content"],
                         custom="this>should<get?escaped?''<fingers crossed"),
             (ul, dict(style="text-align:right;", number_attr=10),

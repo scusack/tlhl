@@ -93,7 +93,7 @@ def render(exp, printer):
 # --------------------------------------------------------------------------------
 
 def render_expression(exp, printer):
-    if renderer_p( exp[0] ) :
+    if renderer_p(exp[0]) :
         # call the renderer giving it the printer so it can do
         # whatever it want to the stream and also call render on the
         # result of the call so that it can just give us some 'valid'

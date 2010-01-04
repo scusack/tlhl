@@ -1,13 +1,34 @@
-* TODO Ensure all elements are represented.
-
-  Check against: http://xhtml.com/en/xhtml/reference/
-
 * TODO Implement the equivalent Mako bench marks
 
   Would be interesting to see how performance compares to some other
   libraries.
 
-* TODO Add some more convenience elements
+
+* TODO Add a django contrib
+
+  Elements to emit django forms and fields, etc.
+
+
+* TODO Add pypi requirements
+
+* TODO Double check tests
+  At present the tests pass if the rendering of the attributes doesn't
+  change, however as the order of keys in a dictionary is not set this
+  seems destined for failure sooner or later.
+
+  Maybe use lxml to parse the generated xml and then verify against
+  that.
+
+* DONE Ensure all elements are represented.
+
+  Check against: http://xhtml.com/en/xhtml/reference/
+
+  [2010-01-04 Mon] - All elements from above reference are included.
+
+* DONE Choose a licence and find the right verbage, etc.
+  [2010-01-04 Mon] - Chose a BSD Licence
+
+* DONE Add some more convenience elements
 
   Such as;
 
@@ -17,6 +38,4 @@
   - js, css which automagically wrap the content in CDATA sections,
     etc
 
-* TODO Add a django contrib
-
-  Elements to emit django forms and fields, etc.
+  [2010-01-04 Mon] - Added css, stylesheet, js and javascript.
