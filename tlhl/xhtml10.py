@@ -6,6 +6,7 @@ http://xhtml.com/en/xhtml/reference/
 
 from types import DictType
 from base import renderer, make_block, make_inline, raw
+from utils import canonicalise_params
 from entities import *
 
 # Declarations
@@ -25,13 +26,6 @@ script = make_block('script', {"type":"text/javascript"}, explicit_end_p=True)
 style  = make_block('style',  {"type":"text/css"},        explicit_end_p=True)
 title  = make_block('title')
 
-# - convenient wrappers for some common usage patterns
-def consume_attrs(params, attrs):
-    if isinstance(params[0], DictType):
-        attrs.update(params[0])
-        return params[1:], attrs
-    return params, attrs
-
 @renderer
 def css(params, printer):
     """
@@ -48,15 +42,12 @@ def css(params, printer):
     Only the first two parameters are considered significant.
     """
 
-    params, attrs = consume_attrs(params,
-                                  {"type"  : "text/css",
-                                   "rel"   : "stylesheet",
-                                   "media" : "screen, projection"})
-    if len(params) != 1 :
-        raise TypeError("Too many parameters passed to 'css' renderer: %s", params)
-
-    attrs['href'] = params[0]
-
+    attrs, href = canonicalise_params(params,
+                                      attrs={"type"  : "text/css",
+                                             "rel"   : "stylesheet",
+                                             "media" : "screen, projection"},
+                                      length=1)
+    attrs['href'] = href
     return (link, attrs)
 
 @renderer
@@ -68,7 +59,7 @@ def stylesheet(params, printer):
 
     (stylesheet, "h1 {color:red;}", "h2 {color:purple;}")
     """
-    params, attrs = consume_attrs(params, {"type":"text/css"})
+    attrs, params = canonicalise_params(params, attrs={"type":"text/css"})
     return (style, attrs, (raw, "\n", params, "\n"))
 
 @renderer
@@ -80,11 +71,8 @@ def js(params, printer):
 
     (js, "/assets/some.js")
     """
-    params, attrs = consume_attrs(params, {})
-    if len(params) != 1 :
-        raise TypeError("Too many parameters pass to 'js' renderer: %s", params)
-
-    attrs["src"] = params[0]
+    attrs, src = canonicalise_params(params, length=1)
+    attrs["src"] = src
     return (script, attrs)
 
 @renderer
@@ -103,8 +91,7 @@ def javascript(params, printer):
     "var hello_world2 = function() { alert('hello world2');};",
     )
     """
-
-    params, attrs = consume_attrs(params, {})
+    attrs, params = canonicalise_params(params)
     return (script, attrs,
             (raw,
              '\n// <![CDATA[\n',
@@ -156,9 +143,9 @@ img      = make_inline('img')
 ins      = make_inline('ins')
 input    = make_inline('input')
 label    = make_inline('label')
-map      = make_inline('map')
+map_     = make_inline('map')
 kbd      = make_inline('kbd')
-object   = make_inline('object')
+object_  = make_inline('object')
 q        = make_inline('q')
 ruby     = make_inline('ruby')
 samp     = make_inline('samp')

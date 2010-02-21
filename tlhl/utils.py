@@ -36,6 +36,38 @@ def attrs(identity=None, classes=None, **kwargs):
 
     return result
 
+def canonicalise_params(params, attrs=None, length=None):
+    """
+    Convenience function for handling the common case where you are called with;
+
+    (some-element, attrs-dict, param1, param2, ...)
+
+    and you want to set ups some defaults for the attrs-dict, then
+    override it with attrs-dict but also handle the case where there
+    are no overrides.
+    """
+    final_attrs = {}
+    if params and isinstance(params[0], DictType):
+        final_attrs = params[0]
+        params = params[1:]
+
+    if attrs is False and final_attrs :
+        raise Exception("Unexpected attributes found, {0}".format(final_attrs))
+
+    if length and len(params) != length:
+        raise Exception("Invalid number of params, expected {0}, got {1}".format(length,
+                                                                                 len(params)))
+
+    if attrs :
+        [final_attrs.setdefault(key, value) for key, value in attrs.items()]
+
+    if length == 1:
+        params = params[0]
+
+    if attrs is False: return params
+
+    return final_attrs, params
+
 # --------------------------------------------------------------------------------
 # Efficient list flattening
 #
