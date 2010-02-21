@@ -31,5 +31,6 @@ def renderer_p(thing):
     return getattr(thing, 'renderer_p', False)
 
 @renderer
-def raw(contents, printer):
-    map(printer.raw, flatten(contents))
+def raw(params, printer):
+    for param in flatten(params):
+        printer.raw(unicode(param))
