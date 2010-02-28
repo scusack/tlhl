@@ -140,8 +140,8 @@ def canonicalise_exp(exp):
     if len(exp) > 1:
         if isinstance(exp[1], DictType):
             attrs    = exp[1]
-            contents = exp[2:]
+            contents = list(exp[2:])
         else :
-            contents = exp[1:]
+            contents = list(exp[1:])
 
-    return elem, attrs, list(contents)
+    return elem, attrs, contents
