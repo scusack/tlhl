@@ -27,17 +27,17 @@ style  = make_block('style',  {"type":"text/css"},        explicit_end_p=True)
 title  = make_block('title')
 
 @renderer
-def css(params, printer):
+def css_include(params, printer):
     """
     Include link to an external CSS resource.
 
     Usage:
 
-    (css, "some-stylesheet.css")
+    (css_include, "some-stylesheet.css")
 
     or
 
-    (css, {"media" : "print"}, "some-stylesheet.css")
+    (css_include, {"media" : "print"}, "some-stylesheet.css")
 
     Only the first two parameters are considered significant.
     """
@@ -51,32 +51,32 @@ def css(params, printer):
     return (link, attrs)
 
 @renderer
-def stylesheet(params, printer):
+def css(params, printer):
     """
     Inline stylesheet.
 
     Usage:
 
-    (stylesheet, "h1 {color:red;}", "h2 {color:purple;}")
+    (css, "h1 {color:red;}", "h2 {color:purple;}")
     """
     attrs, params = canonicalise_params(params, attrs={"type":"text/css"})
     return (style, attrs, (raw, "\n", params, "\n"))
 
 @renderer
-def js(params, printer):
+def js_include(params, printer):
     """
     Shorthand to include javascript via src link
 
     Usage:
 
-    (js, "/assets/some.js")
+    (js_include, "/assets/some.js")
     """
     attrs, src = canonicalise_params(params, length=1)
     attrs["src"] = src
     return (script, attrs)
 
 @renderer
-def javascript(params, printer):
+def js(params, printer):
     """
     Emits the contents (which are assumed to be valid javascript to
     the printer, wrapped in a CDATA section.

@@ -42,13 +42,13 @@ def example_2() :
     """
     doc = (html, {},
            (head, {},
-            (css, "/assets/whatever.css"),
-            (stylesheet, """
+            (css_include, "/assets/whatever.css"),
+            (css, """
 body {
   background-color : white;
 }
 """),
-            (javascript, """
+            (js, """
 var afunc = function(param1, param2){
   if (param1 && param2) {
     return 'woohoo the ampersands didn't get escaped!';
