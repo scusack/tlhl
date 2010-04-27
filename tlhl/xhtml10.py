@@ -145,7 +145,6 @@ input    = make_inline('input')
 label    = make_inline('label')
 map_     = make_inline('map')
 kbd      = make_inline('kbd')
-object_  = make_inline('object')
 q        = make_inline('q')
 ruby     = make_inline('ruby')
 samp     = make_inline('samp')
@@ -158,6 +157,11 @@ sup      = make_inline('sup')
 textarea = make_inline('textarea')
 tt       = make_inline('tt')
 var      = make_inline('var')
+
+# - objects
+object_  = make_block('object')
+embed    = make_block('embed')
+param    = make_block('param')
 
 # - extra useful inline inputs
 text     = make_inline('input', {"type":"text"})
