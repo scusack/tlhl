@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from types import DictType
 from utils import flatten
 

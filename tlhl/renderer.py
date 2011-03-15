@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Need to move a bunch of the html tag elements into a dialect and base it on this;
 

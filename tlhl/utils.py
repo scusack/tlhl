@@ -1,4 +1,6 @@
-from types import ListType, TupleType, StringTypes, DictType
+# -*- coding: utf-8 -*-
+
+from types import ListType, TupleType, StringTypes, DictType, StringType, UnicodeType
 
 # --------------------------------------------------------------------------------
 # Utils and shortcuts
