@@ -1,10 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 
 import datetime
 
 from tlhl import *
 from tlhl.xhtml10 import *
 from tlhl.entities import *
+
+RAW_WITH_UTF8_CHARS = "Fancy UTF-8 Quotes used here “something that should quote” but string just a raw string.  Some &<<>> stuff to try and trip it up."
+SOME_UTF8 = u"Fancy UTF-8 Quotes used here “something that should quote” encoded into a python UnicodeString.  Some &<<>> stuff to try and trip it up. &="
+SOME_UTF8_2 = u"More “quoted stuff” is here."
 
 def example_1() :
     """
@@ -22,6 +27,9 @@ def example_1() :
             (title, "Example generated on: ", datetime.date.today()),
             (script, dict(src="example-javascript.js"))),
            (body,
+            (p, attrs(test=SOME_UTF8_2),
+             RAW_WITH_UTF8_CHARS),
+            (p, SOME_UTF8),
             (select, attrs("#a-select fancy-drop-down"),
              [(option, attrs(selected=idx==4), "option {0}".format(idx)) for idx in range(10)])))
     print render(doc, PrettyPrinter()).show()

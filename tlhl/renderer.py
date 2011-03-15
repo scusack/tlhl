@@ -19,13 +19,11 @@ class PrettyPrinter(object):
         return self.stream.getvalue()
 
     def raw(self, value):
-        """
-        Escape hatch to pump whatever it is straight to the printer.
-        """
-        self.stream.write(value)
-
-    def get_output(self):
-        return self.stream.getvalue()
+        try:
+            self.stream.write(value)
+        except UnicodeEncodeError:
+            # StringIO can't handle anything that uses 8bits
+            self.stream.write(value.encode('ascii', 'xmlcharrefreplace'))
 
     def indent(self):
         self.indent_ += 1
@@ -34,45 +32,47 @@ class PrettyPrinter(object):
         self.indent_ -= 1
 
     def new_line(self, indent_p=True):
-        self.stream.write("\n")
+        self.raw("\n")
         if indent_p and self.indent_:
-            self.stream.write("  " * self.indent_)
+            self.raw("  " * self.indent_)
 
     def open_start_tag(self, tag_name):
-        self.stream.write(u"<")
-        self.stream.write(unicode(tag_name))
+        self.raw("<")
+        self.raw(tag_name)
 
     def close_start_tag(self):
-        self.stream.write(u">")
+        self.raw(">")
 
     def close_tag(self, tag_name, explicit_p, start_tag_open_p=True):
         if start_tag_open_p :
             if explicit_p :
-                self.stream.write(u">")
-                self.stream.write(u"</")
-                self.stream.write(unicode(tag_name))
-                self.stream.write(u">")
+                self.raw(">")
+                self.raw("</")
+                self.raw(tag_name)
+                self.raw(">")
             else:
-                self.stream.write(u" />")
+                self.raw(" />")
         else:
-            self.stream.write(u"</")
-            self.stream.write(unicode(tag_name))
-            self.stream.write(u">")
+            self.raw("</")
+            self.raw(tag_name)
+            self.raw(">")
 
     def text(self, value):
-        self.stream.write(escape(value))
+        self.raw(escape(value))
 
     def attribute(self, name, value):
         if value is False or value is None : return
 
-        # standard way of representing truth in x/html, ie checked="checked" or checked=""
+        # standard way of representing true/false in x/html, ie checked="checked" or checked=""
         if value is True :
             value = name
+        elif not isinstance(value, StringTypes):
+            value = unicode(value)
 
-        self.stream.write(" ")
-        self.stream.write(unicode(name))
-        self.stream.write('=')
-        self.stream.write(quoteattr(unicode(value)))
+        self.raw(" ")
+        self.raw(name)
+        self.raw('=')
+        self.raw(quoteattr(value))
 
 def render(exp, printer):
     if exp is None or exp is False: return
@@ -84,6 +84,10 @@ def render(exp, printer):
     elif isinstance(exp, ListType):
         if not exp : return
         [render(e, printer) for e in exp]
+
+    elif isinstance(exp, StringTypes):
+        if not exp : return
+        printer.text(exp)
 
     else:
         # Some sort of scalar, let it turn itself into unicode and jam

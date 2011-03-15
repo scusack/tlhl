@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 
 from tlhl import *
 from tlhl.xhtml10 import *
@@ -112,6 +113,22 @@ var hello_world2 = function(){
 // ]]>
 </script>""")
 
+STRING_WITH_UTF8_CHARS =  "UTF-8 Quotes used here: “something to quote” but string just a raw string, treated as a sequence of bytes."
+UNICODE_STRING_1       = u"UTF-8 Quotes used here “something to quote” encoded into a python UnicodeString."
+UNICODE_STRING_2       = u"More “quoted stuff” is here."
+
+def test_escaping():
+    check((p, STRING_WITH_UTF8_CHARS),
+          "<p>UTF-8 Quotes used here: “something to quote” but string just a raw string, treated as a sequence of bytes.</p>")
+
+    check((p, UNICODE_STRING_1),
+          "<p>UTF-8 Quotes used here &#8220;something to quote&#8221; encoded into a python UnicodeString.</p>")
+
+    check((p, attrs(one=UNICODE_STRING_2), "text"),
+          "<p one=\"More &#8220;quoted stuff&#8221; is here.\">text</p>")
+
+    check((p, {UNICODE_STRING_2:UNICODE_STRING_2}, "text"),
+          "<p More &#8220;quoted stuff&#8221; is here.=\"More &#8220;quoted stuff&#8221; is here.\">text</p>")
 
 if __name__ == '__main__' :
-    test_js_include()
+    test_escaping()
